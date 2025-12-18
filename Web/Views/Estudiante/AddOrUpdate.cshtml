@@ -1,0 +1,51 @@
+﻿@using Aplicacion.Estudiante.DTOs
+@model EstudianteDto
+
+<div class="container mt-4">
+    <h2>Registrar Nuevo Estudiante</h2>
+    <hr />
+
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+    {
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+
+    </div>
+
+    <form asp-action="Upsert" method="post">
+
+        @if (Model.Id > 0)
+        {
+            <input type="hidden" asp-for="Id" />
+        }
+
+        <div>
+            <label asp-for="Matricula" class="form-label">Matrícula</label>
+            <input asp-for="Matricula" class="form-control" placeholder="Ingrese la matrícula" />
+            <span asp-validation-for="Matricula" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Nombre" class="form-label">Nombre</label>
+            <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Apellido" class="form-label">Apellido</label>
+            <input asp-for="Apellido" class="form-control" placeholder="Ingrese el apellido" />
+            <span asp-validation-for="Apellido" class="text-danger"></span>
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Guardar
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                Volver
+            </a>
+        </div>
+    </form>
+</div>

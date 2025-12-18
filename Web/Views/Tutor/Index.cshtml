@@ -1,0 +1,59 @@
+﻿@using Aplicacion.Tutor.DTOs
+@model IEnumerable<TutorDto>
+
+
+ <div>
+     <div>
+         <h2>Tutores</h2>
+        <hr />
+         <a class="btn btn-primary mb-2" asp-controller="Tutor" asp-action="Upsert">Agregar Tutor</a>
+     </div>
+
+     <div>
+        @if(Model != null)
+        {
+        <table class="table">
+             <thead>
+                 <tr>
+                     <th>Id</th>
+                     <th>Nombre</th>
+                     <th>Apellido</th>
+                     <th>Cedula</th>
+                     <th>Telefono</th>
+                     <th>Acciones</th>
+                 </tr>
+             </thead>
+             <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6">No hay tutores registrados!</td>
+                        </tr>
+                    }
+                    @foreach (var tutor in Model)
+                 {
+                     <tr>
+                         <td>@tutor.Id</td>
+                         <td>@tutor.Nombre</td>
+                         <td>@tutor.Apellido</td>
+                        <td>@tutor.Cedula</td>
+                         <td>@tutor.Telefono</td>
+                         <td>
+                             <a asp-route-id="@tutor.Id" asp-controller="Tutor" asp-action="Upsert" 
+                             class="btn btn-secondary btn-sm">Editar</a>
+                                <a onclick="return confirm('¿Está seguro de que desea eliminar a este tutor?');" 
+                                class="btn btn-danger btn-sm">Eliminar</a>
+                         </td>
+                     </tr>
+                 }
+            </tbody>
+         </table>
+        }
+        else
+        {
+            <p>No hay tutores registrados</p>
+        }
+    </div>
+
+</div>
+

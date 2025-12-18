@@ -1,0 +1,54 @@
+﻿@using Aplicacion.Estudiante.DTOs
+@model IEnumerable<EstudianteDto>
+
+<div>
+    <div>
+        <h2>Estudiantes</h2>
+        <hr />
+        <a class="btn btn-primary mb-2" asp-controller="Estudiante" asp-action="Upsert">Agregar Estudiante</a>
+    </div>
+
+    <div>
+        @if (Model != null)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Matricula</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4">No hay estudiantes registrados!</td>
+                        </tr>
+                    }
+                    @foreach (var estudiante in Model)
+                    {
+                        <tr>
+                            <td>@estudiante.Matricula</td>
+                            <td>@estudiante.Nombre</td>
+                            <td>@estudiante.Apellido</td>
+                            <td>
+                                <a class="btn btn-info btn-sm">Detalles</a>
+                                <a asp-route-id="@estudiante.Id" asp-controller="Estudiante" asp-action="Upsert"
+                                   class="btn btn-secondary btn-sm">Editar</a>
+                                <a onclick="return confirm('¿Está seguro de que desea eliminar a este estudiante?');"
+                                   class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <span>No hay estudiantes registrados</span>
+        }
+
+    </div>
+</div>

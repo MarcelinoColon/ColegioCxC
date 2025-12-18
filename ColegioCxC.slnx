@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Aplicacion/Aplicacion.csproj" />
+  <Project Path="Data/Data.csproj" />
+  <Project Path="Dominio/Dominio.csproj" />
+  <Project Path="Repository/Repository.csproj" />
+  <Project Path="Web/Web.csproj" />
+</Solution>
