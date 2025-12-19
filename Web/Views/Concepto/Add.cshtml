@@ -1,0 +1,43 @@
+﻿@using Aplicacion.Concepto.DTOs
+@model ConceptoDto
+
+<div class="container mt-4">
+    <h2>Registrar Nuevo Concepto</h2>
+    <hr />
+
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+    {
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+
+                <div class="mb-3">
+                    <label asp-for="Nombre" class="form-label">Nombre</label>
+                    <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <label asp-for="EsMora" class="form-label">Es Mora?</label>
+                        <input class="form-check-input" asp-for="EsMora" type="checkbox" role="switch" />
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Guardar
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        Volver
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>

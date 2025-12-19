@@ -1,4 +1,5 @@
-﻿using Aplicacion.Interfaces.Repository;
+﻿using Aplicacion.Estudiante.DTOs;
+using Aplicacion.Interfaces.Repository;
 using Data;
 using Dominio;
 using Microsoft.EntityFrameworkCore;
@@ -59,11 +60,22 @@ namespace Repository
             var estudiante = await _context.Estudiantes.Include(e => e.Tutores)
                 .FirstOrDefaultAsync(e => e.Id == entity.Id);
 
+            if (estudiante == null)
+                throw new ArgumentNullException(nameof(entity));
+
             estudiante.Nombre = entity.Nombre;
             estudiante.Apellido = entity.Apellido;
             estudiante.Matricula = entity.Matricula;
 
-            //Actualizar tutores
+            var idsTutores = entity.Tutores.Select(t => t.Id).ToList();
+
+            var tutoresDb = await _context.Tutores
+                .Where(t => idsTutores.Contains(t.Id))
+                .ToListAsync();
+
+            estudiante.Tutores = tutoresDb;
+
+            await _context.SaveChangesAsync();
         }
 
         #region Mappers

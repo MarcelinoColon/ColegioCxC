@@ -1,0 +1,60 @@
+﻿@using Aplicacion.Concepto.DTOs
+@model IEnumerable<ConceptoDto>
+
+<div>
+    <div>
+        <h2>Conceptos</h2>
+        <hr />
+        <a class="btn btn-primary mb-2" asp-controller="Concepto" asp-action="Create">Agregar Concepto</a>
+    </div>
+
+    <div>
+        @if (Model != null)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Mora</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6">No hay conceptos registrados!</td>
+                        </tr>
+                    }
+                    @foreach (var concepto in Model)
+                    {
+                        <tr>
+                            <td>@concepto.Id</td>
+                            <td>@concepto.Nombre</td>
+                            <td>
+                                @if (concepto.EsMora)
+                                {
+                                    <span class="badge bg-warning text-dark">Recargo / Mora</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Cargo Normal</span>
+                                }
+                            </td>
+                            <td>
+                                <a onclick="return confirm('¿Está seguro de que desea eliminar a este concepto?');"
+                                   class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No hay conceptos registrados</p>
+        }
+    </div>
+
+</div>

@@ -84,13 +84,13 @@ namespace Repository
             }
             else
             {
-                searchTerm = searchTerm.Trim();
+                searchTerm = searchTerm.ToUpper().Trim();
 
                 query = query.Where(t =>
-                    t.Nombre.Contains(searchTerm) ||
-                    (t.Apellido != null && t.Apellido.Contains(searchTerm)) ||
-                    (t.Cedula != null && t.Cedula.Contains(searchTerm)) ||
-                    (t.Telefono != null && t.Telefono.Contains(searchTerm))
+                    t.Nombre.ToUpper().Contains(searchTerm) ||
+                    (t.Apellido != null && t.Apellido.ToUpper().Contains(searchTerm)) ||
+                    (t.Cedula != null && t.Cedula.ToUpper().Contains(searchTerm)) ||
+                    (t.Telefono != null && t.Telefono.ToUpper().Contains(searchTerm))
                 );
             }
 

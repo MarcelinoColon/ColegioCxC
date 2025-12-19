@@ -17,6 +17,7 @@
                         <th>Matricula</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>Tutor Principal</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -33,8 +34,10 @@
                             <td>@estudiante.Matricula</td>
                             <td>@estudiante.Nombre</td>
                             <td>@estudiante.Apellido</td>
+                            <td>@(estudiante.Tutores?.FirstOrDefault()?.Nombre ?? "Sin tutor")</td>
                             <td>
-                                <a class="btn btn-info btn-sm">Detalles</a>
+                                <a asp-route-id="@estudiante.Id" asp-controller="Estudiante" asp-action="GetSingle"
+                                class="btn btn-info btn-sm">Detalles</a>
                                 <a asp-route-id="@estudiante.Id" asp-controller="Estudiante" asp-action="Upsert"
                                    class="btn btn-secondary btn-sm">Editar</a>
                                 <a onclick="return confirm('¿Está seguro de que desea eliminar a este estudiante?');"

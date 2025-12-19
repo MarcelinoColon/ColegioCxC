@@ -10,11 +10,15 @@ namespace Web.Controllers
     {
         private readonly IReadUseCase<TutorDto, TutorEntity> _obtenerTutorUseCase;
         private readonly IUpsertUseCase<TutorDto, TutorEntity> _agregarActualizarTutorUseCase;
+        private readonly ISearchUseCase<TutorDto, TutorEntity> _buscarTutorUseCase;
 
-        public TutorController(IReadUseCase<TutorDto, TutorEntity> obtenerTutorUseCase, IUpsertUseCase<TutorDto, TutorEntity> agregarActualizarTutorUseCase)
+        public TutorController(IReadUseCase<TutorDto, TutorEntity> obtenerTutorUseCase, 
+            IUpsertUseCase<TutorDto, TutorEntity> agregarActualizarTutorUseCase,
+            ISearchUseCase<TutorDto, TutorEntity> buscarTutorUseCase)
         {
             _obtenerTutorUseCase = obtenerTutorUseCase;
             _agregarActualizarTutorUseCase = agregarActualizarTutorUseCase;
+            _buscarTutorUseCase = buscarTutorUseCase;
         }
         public async Task<IActionResult> Index()
         {
@@ -52,7 +56,7 @@ namespace Web.Controllers
 
         }
 
-        [HttpPost("upsert")]
+        [HttpPost("upsert/{id:int?}")]
         public async Task<IActionResult> Upsert(TutorDto dto)
         {
             try
@@ -66,6 +70,27 @@ namespace Web.Controllers
 
                 return View("AddOrUpdate", dto);
             }
+        }
+
+        [HttpGet("Buscar")]
+        public async Task<IActionResult> BuscarTutores(string term)
+        {
+            var tutores = await _buscarTutorUseCase.SearchAsync(term);
+
+            var resultado = tutores.Select(t =>
+            {
+                string nombreCompleto = $"{t.Nombre} {t.Apellido}".Trim();
+                string parteCedula = string.IsNullOrWhiteSpace(t.Cedula)
+                                     ? ""
+                                     : $" - {t.Cedula}";
+                return new
+                {
+                    id = t.Id,
+                    text = $"{nombreCompleto}{parteCedula}"
+                };
+            });
+
+            return Json(new { results = resultado });
         }
     }
 }

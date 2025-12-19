@@ -57,7 +57,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost("upsert")]
+        [HttpPost("upsert/{id:int?}")]
         public async Task<IActionResult> Upsert(EstudianteDto dto)
         {
             try
@@ -70,6 +70,21 @@ namespace Web.Controllers
                 ModelState.AddModelError(string.Empty, ex.Message);
 
                 return View("AddOrUpdate", dto);
+            }
+        }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetSingle(int id)
+        {
+            try
+            {
+                var estudianteDto = await _obtenerEstudianteUseCase.GetById(id);
+
+                return View("Details", estudianteDto);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Ocurrió un error al intentar cargar el formulario: {ex.Message}";
+                return RedirectToAction("Index");
             }
         }
     }

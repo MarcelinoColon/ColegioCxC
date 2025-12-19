@@ -13,5 +13,6 @@ namespace Aplicacion.Estudiante.DTOs
         public string Apellido { get;  set; }
         public string Matricula { get;  set; }
         public List<TutorDto>? Tutores { get; set; }
+        public List<int>? TutoresIds { get; set; }
     }
 }

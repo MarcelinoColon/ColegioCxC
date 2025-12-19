@@ -1,3 +1,6 @@
+using Aplicacion.Concepto.CasosDeUso;
+using Aplicacion.Concepto.DTOs;
+using Aplicacion.Concepto.Mappers;
 using Aplicacion.Estudiante.CasosDeUso;
 using Aplicacion.Estudiante.DTOs;
 using Aplicacion.Estudiante.Mappers;
@@ -33,6 +36,9 @@ builder.Services.AddScoped<IMapper<TutorEntity, TutorDto>, TutorEntityATutorDtoM
 builder.Services.AddScoped<IMapper<EstudianteDto, EstudianteEntity>, EstudianteDtoToEntityMapper>();
 builder.Services.AddScoped<IMapper<EstudianteEntity, EstudianteDto>, EstudianteEntityToDtoMapper>();
 
+builder.Services.AddScoped<IMapper<ConceptoDto, ConceptoEntity>, ConceptoDtoToEntityMapper>();
+builder.Services.AddScoped<IMapper<ConceptoEntity, ConceptoDto>, ConceptoEntityToDtoMapper>();
+
 //Casos de uso
 builder.Services.AddScoped<IUpsertUseCase<TutorDto, TutorEntity>, AgregarActualizarTutorUseCase>();
 builder.Services.AddScoped<IReadUseCase<TutorDto, TutorEntity>, ObtenerTutorUseCase>();
@@ -40,6 +46,9 @@ builder.Services.AddScoped<ISearchUseCase<TutorDto, TutorEntity>, BuscarTutorUse
 
 builder.Services.AddScoped<IUpsertUseCase<EstudianteDto, EstudianteEntity>, AgregarActualizarEstudianteUseCase>();
 builder.Services.AddScoped<IReadUseCase<EstudianteDto, EstudianteEntity>, ObtenerEstudianteUseCase>();
+
+builder.Services.AddScoped<ICreateUseCase<ConceptoDto, ConceptoEntity>, AgregarConceptoUseCase>();
+builder.Services.AddScoped<IReadUseCase<ConceptoDto, ConceptoEntity>, ObtenerConceptoUseCase>();
 
 //Repository
 builder.Services.AddScoped<ICreateRepository<TutorEntity>, TutorRepository>();
@@ -51,6 +60,8 @@ builder.Services.AddScoped<ICreateRepository<EstudianteEntity>, EstudianteReposi
 builder.Services.AddScoped<IReadRepository<EstudianteEntity>, EstudianteReposiory>();
 builder.Services.AddScoped<IUpdateRepository<EstudianteEntity>, EstudianteReposiory>();
 
+builder.Services.AddScoped<ICreateRepository<ConceptoEntity>, ConceptoRepository>();
+builder.Services.AddScoped<IReadRepository<ConceptoEntity>, ConceptoRepository>();
 
 var app = builder.Build();
 
