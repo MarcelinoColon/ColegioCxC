@@ -22,6 +22,11 @@ namespace Repository
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
+            var exists = await _context.Estudiantes
+                .AnyAsync(e => e.Matricula == entity.Matricula);
+
+            if(exists)
+                throw new InvalidOperationException($"Ya existe un estudiante con la matrícula: {entity.Matricula}");
 
             var estudiante = MapToModel(entity);
 

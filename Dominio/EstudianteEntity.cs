@@ -14,14 +14,16 @@ namespace Dominio
 
         public EstudianteEntity(int id, string nombre, string apellido, string matricula)
         {
-            if(id<=0)
+            if (id <= 0)
                 throw new ArgumentException("El Id debe ser un entero positivo.", nameof(id));
-            if(string.IsNullOrWhiteSpace(nombre))
+            if (string.IsNullOrWhiteSpace(nombre))
                 throw new ArgumentException("El nombre no puede estar vacío.", nameof(nombre));
-            if(string.IsNullOrWhiteSpace(apellido))
+            if (string.IsNullOrWhiteSpace(apellido))
                 throw new ArgumentException("El apellido no puede estar vacío.", nameof(apellido));
-            if(string.IsNullOrWhiteSpace(matricula))
+            if (string.IsNullOrWhiteSpace(matricula))
                 throw new ArgumentException("La matrícula no puede estar vacía.", nameof(matricula));
+            if (matricula.Length > 9)
+                throw new ArgumentException("La matrícula no puede exceder los 8 caracteres.", nameof(matricula));
 
             Id = id;
             Nombre = nombre;
@@ -37,6 +39,8 @@ namespace Dominio
                 throw new ArgumentException("El apellido no puede estar vacío.", nameof(apellido));
             if (string.IsNullOrWhiteSpace(matricula))
                 throw new ArgumentException("La matrícula no puede estar vacía.", nameof(matricula));
+            if (matricula.Length > 9)
+                throw new ArgumentException("La matrícula no puede exceder los 8 caracteres.", nameof(matricula));
 
             Nombre = nombre;
             Apellido = apellido;
@@ -59,7 +63,7 @@ namespace Dominio
         }
         public void Validar()
         {
-            if(!Tutores.Any())
+            if (!Tutores.Any())
                 throw new InvalidOperationException("El estudiante debe tener al menos un tutor asignado.");
         }
 

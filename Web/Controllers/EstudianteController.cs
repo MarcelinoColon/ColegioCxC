@@ -24,9 +24,22 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var estudiantesDto = await _obtenerEstudianteUseCase.GetAll();
+            try
+            {
+                var estudiantesDto = await _obtenerEstudianteUseCase.GetAll();
 
-            return View(estudiantesDto);
+                return View(estudiantesDto);
+            }
+            catch(ArgumentException ex)
+            {
+                TempData["Error"] = $"Ocurrió un error al intentar cargar el formulario: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                TempData["Error"] = $"Ocurrió un error al intentar cargar el formulario: {ex.Message}";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet("upsert")]
