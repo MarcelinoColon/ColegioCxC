@@ -1,0 +1,49 @@
+﻿using Aplicacion.Cargo.DTOs;
+using Aplicacion.Interfaces.Repository;
+using Aplicacion.Interfaces.UseCase;
+using Dominio;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Aplicacion.Cargo.CasosDeUso
+{
+    public class AgregarCargosMasivosUseCase : ICreateUseCase<CargoInsertDto, CargoEntity>
+    {
+        private readonly ICreateRangeRepository<CargoEntity> _repository;
+        private readonly IReadRepository<ConceptoEntity> _conceptoRepository;
+
+        public AgregarCargosMasivosUseCase(ICreateRangeRepository<CargoEntity> repository, 
+            IReadRepository<ConceptoEntity> conceptoRepository)
+        {
+            _repository = repository;
+            _conceptoRepository = conceptoRepository;
+        }
+
+        public async Task AddAsync(CargoInsertDto dto)
+        {
+            if (dto == null) 
+                throw new ArgumentNullException(nameof(dto));
+            if(!dto.EstudiantesIds.Any())
+                throw new ArgumentException("Debe selecionar almenos 1 estudiante", nameof(dto.EstudiantesIds));
+
+            var concepto = await _conceptoRepository.GetByIdAsync(dto.ConceptoId);
+
+            if (concepto == null)
+                throw new ArgumentException("Ingrese un concepto valido", nameof(dto.ConceptoId));
+
+            var cargosEntities = new List<CargoEntity>();
+            var fechaActual = DateTime.Now;
+
+            foreach(var estudianteId in dto.EstudiantesIds)
+            {
+                var cargoEntity = new CargoEntity(estudianteId, dto.ConceptoId, fechaActual,totalCargo: dto.TotalCargo,
+                    totalPagado: 0,saldoPendiente: dto.TotalCargo, "Pendiente", null);
+
+                cargosEntities.Add(cargoEntity);
+            }
+
+            await _repository.AddRange(cargosEntities);
+        }
+    }
+}

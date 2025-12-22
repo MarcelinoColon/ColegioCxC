@@ -17,7 +17,7 @@ namespace Dominio
         public string Estado { get; private set; }
         public int? CargoId { get; private set; }
 
-        public CargoEntity(int id, int estudianteId, int conceptoId, DateTime fechaGeneracion, DateTime fechaVencimiento,
+        public CargoEntity(int id, int estudianteId, int conceptoId, DateTime fechaGeneracion,
                            decimal totalCargo, decimal totalPagado, decimal saldoPendiente, string estado, int? cargoId)
         {
             if (id <= 0) 
@@ -33,8 +33,7 @@ namespace Dominio
             if (fechaGeneracion > DateTime.Now)
                 throw new ArgumentException("La fecha de generación no puede ser futura.", nameof(fechaGeneracion));
 
-            if (fechaVencimiento < fechaGeneracion.Date)
-                throw new ArgumentException("La fecha de vencimiento no puede ser anterior a la fecha de generación.", nameof(fechaVencimiento));
+
 
             if (string.IsNullOrWhiteSpace(estado))
                 throw new ArgumentException("El estado es obligatorio.", nameof(estado));
@@ -56,7 +55,7 @@ namespace Dominio
             EstudianteId = estudianteId;
             ConceptoId = conceptoId;
             FechaGeneracion = fechaGeneracion;
-            FechaVencimiento = fechaVencimiento;
+            FechaVencimiento = fechaGeneracion.AddDays(5);
             TotalCargo = totalCargo;
             TotalPagado = totalPagado;
             SaldoPendiente = saldoPendiente;
@@ -64,7 +63,7 @@ namespace Dominio
             CargoId = cargoId;
         }
 
-        public CargoEntity(int estudianteId, int conceptoId, DateTime fechaGeneracion, DateTime fechaVencimiento,
+        public CargoEntity(int estudianteId, int conceptoId, DateTime fechaGeneracion,
                            decimal totalCargo, decimal totalPagado, decimal saldoPendiente, string estado, int? cargoId)
         {
             if (estudianteId <= 0)
@@ -77,9 +76,6 @@ namespace Dominio
 
             if (fechaGeneracion > DateTime.Now)
                 throw new ArgumentException("La fecha de generación no puede ser futura.", nameof(fechaGeneracion));
-
-            if (fechaVencimiento < fechaGeneracion.Date)
-                throw new ArgumentException("La fecha de vencimiento no puede ser anterior a la fecha de generación.", nameof(fechaVencimiento));
 
             if (string.IsNullOrWhiteSpace(estado))
                 throw new ArgumentException("El estado es obligatorio.", nameof(estado));
@@ -100,7 +96,7 @@ namespace Dominio
             EstudianteId = estudianteId;
             ConceptoId = conceptoId;
             FechaGeneracion = fechaGeneracion;
-            FechaVencimiento = fechaVencimiento;
+            FechaVencimiento = fechaGeneracion.AddDays(5);
             TotalCargo = totalCargo;
             TotalPagado = totalPagado;
             SaldoPendiente = saldoPendiente;
