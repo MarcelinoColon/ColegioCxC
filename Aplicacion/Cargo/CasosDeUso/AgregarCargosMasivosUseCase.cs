@@ -12,6 +12,7 @@ namespace Aplicacion.Cargo.CasosDeUso
     {
         private readonly ICreateRangeRepository<CargoEntity> _repository;
         private readonly IReadRepository<ConceptoEntity> _conceptoRepository;
+        private readonly IRangeValidateRepository<EstudianteEntity> _validarEstudianteRepository;
 
         public AgregarCargosMasivosUseCase(ICreateRangeRepository<CargoEntity> repository, 
             IReadRepository<ConceptoEntity> conceptoRepository)
@@ -27,6 +28,10 @@ namespace Aplicacion.Cargo.CasosDeUso
             if(!dto.EstudiantesIds.Any())
                 throw new ArgumentException("Debe selecionar almenos 1 estudiante", nameof(dto.EstudiantesIds));
 
+            if (!(await _validarEstudianteRepository.Validate(dto.EstudiantesIds)))
+                throw new ArgumentException("Uno o mas estudiantes no existen", nameof(dto.EstudiantesIds));
+
+
             var concepto = await _conceptoRepository.GetByIdAsync(dto.ConceptoId);
 
             if (concepto == null)
@@ -35,10 +40,10 @@ namespace Aplicacion.Cargo.CasosDeUso
             var cargosEntities = new List<CargoEntity>();
             var fechaActual = DateTime.Now;
 
-            foreach(var estudianteId in dto.EstudiantesIds)
+            foreach(var estudianteId in dto.EstudiantesIds.Distinct())
             {
-                var cargoEntity = new CargoEntity(estudianteId, dto.ConceptoId, fechaActual,totalCargo: dto.TotalCargo,
-                    totalPagado: 0,saldoPendiente: dto.TotalCargo, "Pendiente", null);
+                var cargoEntity = new CargoEntity(estudianteId, dto.ConceptoId, fechaActual,totalCargo: concepto.Monto,
+                    totalPagado: 0,saldoPendiente: concepto.Monto, "Pendiente", null);
 
                 cargosEntities.Add(cargoEntity);
             }

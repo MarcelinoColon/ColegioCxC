@@ -15,9 +15,9 @@ namespace Aplicacion.Concepto.Mappers
                 throw new ArgumentNullException(nameof(conceptoDto));
 
             var conceptoEntity = (conceptoDto.Id == null) ?
-                new ConceptoEntity(conceptoDto.Nombre, conceptoDto.EsMora)
+                new ConceptoEntity(conceptoDto.Nombre,conceptoDto.Monto, conceptoDto.EsMora)
                 :
-                new ConceptoEntity((int)conceptoDto.Id, conceptoDto.Nombre, conceptoDto.EsMora);
+                new ConceptoEntity((int)conceptoDto.Id, conceptoDto.Nombre,conceptoDto.Monto, conceptoDto.EsMora);
 
             return conceptoEntity;
         }

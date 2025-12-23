@@ -24,6 +24,7 @@ namespace Repository
             var concepto = new Concepto
             {
                 Nombre = entity.Nombre,
+                Monto = entity.Monto,
                 EsMora = entity.EsMora
             };
 
@@ -35,7 +36,7 @@ namespace Repository
         {
             var conceptos = await _context.Conceptos.AsNoTracking().ToListAsync();
 
-            var conceptosEntities = conceptos.Select(c => new ConceptoEntity(c.Id, c.Nombre, c.EsMora));
+            var conceptosEntities = conceptos.Select(c => new ConceptoEntity(c.Id, c.Nombre,c.Monto, c.EsMora));
 
             return conceptosEntities;
         }
@@ -47,7 +48,7 @@ namespace Repository
             if (concepto == null)
                 throw new ArgumentNullException(nameof(concepto));
 
-            return new ConceptoEntity(concepto.Id, concepto.Nombre, concepto.EsMora);
+            return new ConceptoEntity(concepto.Id, concepto.Nombre,concepto.Monto, concepto.EsMora);
         }
     }
 }

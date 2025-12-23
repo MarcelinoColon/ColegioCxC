@@ -16,6 +16,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
+                        <th>Monto</th>
                         <th>Mora</th>
                         <th>Acciones</th>
                     </tr>
@@ -32,6 +33,7 @@
                         <tr>
                             <td>@concepto.Id</td>
                             <td>@concepto.Nombre</td>
+                            <td>@concepto.Monto.ToString("C")</td>
                             <td>
                                 @if (concepto.EsMora)
                                 {

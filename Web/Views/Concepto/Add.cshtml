@@ -21,6 +21,15 @@
                 </div>
 
                 <div class="mb-3">
+                    <label asp-for="Monto" class="form-label">Monto</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="Monto" class="form-control" placeholder="Ingrese el monto" />
+                    </div>
+                    <span asp-validation-for="Monto" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
                     <div class="form-check form-switch">
                         <label asp-for="EsMora" class="form-label">Es Mora?</label>
                         <input class="form-check-input" asp-for="EsMora" type="checkbox" role="switch" />

@@ -9,7 +9,8 @@ using System.Text;
 
 namespace Repository
 {
-    public class EstudianteReposiory : IReadRepository<EstudianteEntity>, ICreateRepository<EstudianteEntity>, IUpdateRepository<EstudianteEntity>
+    public class EstudianteReposiory : IReadRepository<EstudianteEntity>, ICreateRepository<EstudianteEntity>,
+        IUpdateRepository<EstudianteEntity>, IRangeValidateRepository<EstudianteEntity>
     {
         private readonly ColegioDbContext _context;
 
@@ -25,7 +26,7 @@ namespace Repository
             var exists = await _context.Estudiantes
                 .AnyAsync(e => e.Matricula == entity.Matricula);
 
-            if(exists)
+            if (exists)
                 throw new InvalidOperationException($"Ya existe un estudiante con la matrícula: {entity.Matricula}");
 
             var estudiante = MapToModel(entity);
@@ -40,18 +41,18 @@ namespace Repository
                 .AsNoTracking()
                 .ToListAsync();
 
-            return estudiantes.Select(e =>MapToEntity(e));
+            return estudiantes.Select(e => MapToEntity(e));
         }
 
         public async Task<EstudianteEntity> GetByIdAsync(int id)
         {
-            if(id<=0)
+            if (id <= 0)
                 throw new ArgumentException(nameof(id));
 
             var estudiante = await _context.Estudiantes.Include(e => e.Tutores)
                 .FirstOrDefaultAsync(e => e.Id == id);
 
-            if(estudiante == null)
+            if (estudiante == null)
                 throw new KeyNotFoundException($"Estudiante con id: {id} no existe.");
 
             return MapToEntity(estudiante);
@@ -59,7 +60,7 @@ namespace Repository
 
         public async Task Update(EstudianteEntity entity)
         {
-            if(entity == null)
+            if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
             var estudiante = await _context.Estudiantes.Include(e => e.Tutores)
@@ -81,6 +82,12 @@ namespace Repository
             estudiante.Tutores = tutoresDb;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> Validate(IEnumerable<int> ids)
+        {
+            return await _context.Estudiantes
+                         .CountAsync(e => ids.Contains(e.Id)) == ids.Distinct().Count();
         }
 
         #region Mappers

@@ -1,3 +1,5 @@
+using Aplicacion.Cargo.CasosDeUso;
+using Aplicacion.Cargo.DTOs;
 using Aplicacion.Concepto.CasosDeUso;
 using Aplicacion.Concepto.DTOs;
 using Aplicacion.Concepto.Mappers;
@@ -14,6 +16,7 @@ using Data;
 using Dominio;
 using Microsoft.EntityFrameworkCore;
 using Repository;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +53,8 @@ builder.Services.AddScoped<IReadUseCase<EstudianteDto, EstudianteEntity>, Obtene
 builder.Services.AddScoped<ICreateUseCase<ConceptoDto, ConceptoEntity>, AgregarConceptoUseCase>();
 builder.Services.AddScoped<IReadUseCase<ConceptoDto, ConceptoEntity>, ObtenerConceptoUseCase>();
 
+builder.Services.AddScoped<ICreateUseCase<CargoInsertDto, CargoEntity>, AgregarCargosMasivosUseCase>();
+
 //Repository
 builder.Services.AddScoped<ICreateRepository<TutorEntity>, TutorRepository>();
 builder.Services.AddScoped<IReadRepository<TutorEntity>, TutorRepository>();
@@ -59,9 +64,18 @@ builder.Services.AddScoped<ISearchRepository<TutorEntity>, TutorRepository>();
 builder.Services.AddScoped<ICreateRepository<EstudianteEntity>, EstudianteReposiory>();
 builder.Services.AddScoped<IReadRepository<EstudianteEntity>, EstudianteReposiory>();
 builder.Services.AddScoped<IUpdateRepository<EstudianteEntity>, EstudianteReposiory>();
+builder.Services.AddScoped<IRangeValidateRepository<EstudianteEntity>, EstudianteReposiory>();
 
 builder.Services.AddScoped<ICreateRepository<ConceptoEntity>, ConceptoRepository>();
 builder.Services.AddScoped<IReadRepository<ConceptoEntity>, ConceptoRepository>();
+
+builder.Services.AddScoped<ICreateRangeRepository<CargoEntity>, CargoRepository>();
+
+
+var culture = new CultureInfo("es-DO");
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
+
 
 var app = builder.Build();
 

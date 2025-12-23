@@ -18,6 +18,7 @@ namespace Aplicacion.Concepto.Mappers
             {
                 Id = conceptoEntity.Id,
                 Nombre = conceptoEntity.Nombre,
+                Monto= conceptoEntity.Monto,
                 EsMora = conceptoEntity.EsMora
             };
 

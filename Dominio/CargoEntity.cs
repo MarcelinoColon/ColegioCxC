@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Dominio
@@ -16,6 +17,8 @@ namespace Dominio
         public decimal SaldoPendiente { get; private set; }
         public string Estado { get; private set; }
         public int? CargoId { get; private set; }
+        public EstudianteEntity? Estudiante { get; private set; }
+        public ConceptoEntity? Concepto { get; private set; }
 
         public CargoEntity(int id, int estudianteId, int conceptoId, DateTime fechaGeneracion,
                            decimal totalCargo, decimal totalPagado, decimal saldoPendiente, string estado, int? cargoId)
@@ -123,6 +126,18 @@ namespace Dominio
             {
                 Estado = "Pago parcial";
             }
+        }
+        public void SetEstudiante(EstudianteEntity estudiante)
+        {
+            if (estudiante == null)
+                throw new ArgumentNullException(nameof(estudiante));
+            Estudiante = estudiante;
+        }
+        public void SetConcepto(ConceptoEntity concepto)
+        {
+            if (concepto == null)
+                throw new ArgumentNullException(nameof(concepto));
+            Concepto = concepto;
         }
     }
 }

@@ -16,5 +16,8 @@ namespace Data
         public decimal SaldoPendiente { get; set; }
         public string Estado { get; set; }
         public int? CargoId { get; set; }
+        public virtual Estudiante Estudiante { get; set; } = null!;
+        public virtual Concepto Concepto { get; set; } = null!;
+
     }
 }
