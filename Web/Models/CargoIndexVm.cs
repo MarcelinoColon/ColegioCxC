@@ -7,6 +7,6 @@ namespace Web.Models
     {
         public PaginationDto<CargoDto> Pagination { get; set; }
 
-        public List<int> SelectOptions { get; set; } = [5, 10, 15];
+        public List<int> SelectOptions { get; set; } = [5, 10, 25, 50];
     }
 }
