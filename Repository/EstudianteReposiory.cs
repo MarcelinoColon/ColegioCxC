@@ -19,6 +19,10 @@ namespace Repository
             _context = context;
         }
 
+        public Task<(IEnumerable<EstudianteEntity> Items, int TotalRecords)> GetAllPaginatedAsync(int pageSize, int currentPage)
+        {
+            throw new NotImplementedException();
+        }
         public async Task Create(EstudianteEntity entity)
         {
             if (entity == null)
@@ -30,6 +34,19 @@ namespace Repository
                 throw new InvalidOperationException($"Ya existe un estudiante con la matrícula: {entity.Matricula}");
 
             var estudiante = MapToModel(entity);
+
+            estudiante.Tutores.Clear();
+
+            if (entity.Tutores != null && entity.Tutores.Any())
+            {
+                var idsTutores = entity.Tutores.Select(t => t.Id).ToList();
+
+                var tutoresReales = await _context.Tutores
+                    .Where(t => idsTutores.Contains(t.Id))
+                    .ToListAsync();
+
+                estudiante.Tutores = tutoresReales;
+            }
 
             await _context.Estudiantes.AddAsync(estudiante);
             await _context.SaveChangesAsync();
@@ -120,7 +137,8 @@ namespace Repository
                 Id = estudianteEntity.Id,
                 Nombre = estudianteEntity.Nombre,
                 Apellido = estudianteEntity.Apellido,
-                Matricula = estudianteEntity.Matricula
+                Matricula = estudianteEntity.Matricula,
+                Tutores = new List<Tutor>()
             };
 
             foreach (var tutorEntity in estudianteEntity.Tutores)
@@ -137,6 +155,7 @@ namespace Repository
 
             return estudiante;
         }
+
 
         #endregion
     }

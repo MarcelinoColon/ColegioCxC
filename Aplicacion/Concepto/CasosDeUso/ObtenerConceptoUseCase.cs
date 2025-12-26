@@ -2,6 +2,7 @@
 using Aplicacion.Interfaces.Mapper;
 using Aplicacion.Interfaces.Repository;
 using Aplicacion.Interfaces.UseCase;
+using Aplicacion.Paginacion;
 using Dominio;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace Aplicacion.Concepto.CasosDeUso
             var conceptos = await _repository.GetAllAsync();
 
             return conceptos.Select(c => _mapper.Map(c));
+        }
+
+        public Task<PaginationDto<ConceptoDto>> GetAllPaginated(int pageSize, int currentPage)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ConceptoDto> GetById(int id)

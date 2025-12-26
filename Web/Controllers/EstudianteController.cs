@@ -100,5 +100,23 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }
         }
+        [HttpGet("obtener")]
+        public async Task<IActionResult> Obtener()
+        {
+            var estudiantes = await _obtenerEstudianteUseCase.GetAll();
+
+            var resultado = estudiantes.Select(t =>
+            {
+                string nombreCompleto = $"{t.Nombre} {t.Apellido}".Trim();
+
+                return new
+                {
+                    id = t.Id,
+                    text = $"{nombreCompleto}"
+                };
+            });
+
+            return Json(new { results = resultado });
+        }
     }
 }

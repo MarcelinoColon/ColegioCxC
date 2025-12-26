@@ -1,0 +1,52 @@
+﻿@using Aplicacion.Cargo.DTOs
+@model CargoInsertDto
+
+<div class="container mt-4">
+    <h2>Generar Cargos</h2>
+    <hr />
+
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+    {
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Seleccionar concepto</label>
+
+                    <select class="form-select"
+                            id="select-concepto"
+                            name="ConceptoId"
+                            data-url="@Url.Action("Obtener", "Concepto")"
+                            required>
+                        <option value="">Cargando conceptos...</option>
+                    </select>
+
+                    <span asp-validation-for="ConceptoId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Seleccionar Estudiantes</label>
+
+                    <div id="contenedor-estudiantes"
+                         class="border rounded p-3"
+                         style="max-height: 300px; overflow-y: auto;"
+                         data-url="@Url.Action("Obtener", "Estudiante")">
+
+                        <div class="text-center text-muted">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Cargando estudiantes...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Generar</button>
+                    <a class="btn btn-secondary" asp-controller="Cargo" asp-action="Index">Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

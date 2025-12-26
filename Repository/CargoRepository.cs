@@ -16,6 +16,20 @@ namespace Repository
             _context = context;
         }
 
+        public async Task<(IEnumerable<CargoEntity> Items, int TotalRecords)> GetAllPaginatedAsync(int pageSize, int currentPage)
+        {
+            var query = _context.Cargos.Include(c => c.Estudiante)
+                .Include(c => c.Concepto).OrderByDescending(c => c.FechaGeneracion).AsNoTracking();
+
+            var totalRecords = await query.CountAsync();
+
+            var itemsModel = await query.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var itemsEntity = itemsModel.Select(c => MapToEntity(c)).ToList();
+
+            return (itemsEntity, totalRecords);
+        }
+
         public async Task AddRange(IEnumerable<CargoEntity> entities)
         {
             var cargos = entities.Select(c => MapToModel(c));
@@ -79,7 +93,6 @@ namespace Repository
 
             return cargoEntity;
         }
-
 
         #endregion
     }

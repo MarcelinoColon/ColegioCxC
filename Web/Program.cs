@@ -1,5 +1,6 @@
 using Aplicacion.Cargo.CasosDeUso;
 using Aplicacion.Cargo.DTOs;
+using Aplicacion.Cargo.Mappers;
 using Aplicacion.Concepto.CasosDeUso;
 using Aplicacion.Concepto.DTOs;
 using Aplicacion.Concepto.Mappers;
@@ -42,6 +43,8 @@ builder.Services.AddScoped<IMapper<EstudianteEntity, EstudianteDto>, EstudianteE
 builder.Services.AddScoped<IMapper<ConceptoDto, ConceptoEntity>, ConceptoDtoToEntityMapper>();
 builder.Services.AddScoped<IMapper<ConceptoEntity, ConceptoDto>, ConceptoEntityToDtoMapper>();
 
+builder.Services.AddScoped<IMapper<CargoEntity, CargoDto>, CargoEntityToDtoMapper>();
+
 //Casos de uso
 builder.Services.AddScoped<IUpsertUseCase<TutorDto, TutorEntity>, AgregarActualizarTutorUseCase>();
 builder.Services.AddScoped<IReadUseCase<TutorDto, TutorEntity>, ObtenerTutorUseCase>();
@@ -54,6 +57,7 @@ builder.Services.AddScoped<ICreateUseCase<ConceptoDto, ConceptoEntity>, AgregarC
 builder.Services.AddScoped<IReadUseCase<ConceptoDto, ConceptoEntity>, ObtenerConceptoUseCase>();
 
 builder.Services.AddScoped<ICreateUseCase<CargoInsertDto, CargoEntity>, AgregarCargosMasivosUseCase>();
+builder.Services.AddScoped<IReadUseCase<CargoDto, CargoEntity>, ObtenerCargoUseCase>();
 
 //Repository
 builder.Services.AddScoped<ICreateRepository<TutorEntity>, TutorRepository>();
@@ -70,6 +74,10 @@ builder.Services.AddScoped<ICreateRepository<ConceptoEntity>, ConceptoRepository
 builder.Services.AddScoped<IReadRepository<ConceptoEntity>, ConceptoRepository>();
 
 builder.Services.AddScoped<ICreateRangeRepository<CargoEntity>, CargoRepository>();
+builder.Services.AddScoped<IReadRepository<CargoEntity>, CargoRepository>();
+
+
+
 
 
 var culture = new CultureInfo("es-DO");

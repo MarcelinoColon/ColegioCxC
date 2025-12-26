@@ -2,6 +2,7 @@
 using Aplicacion.Interfaces.Mapper;
 using Aplicacion.Interfaces.Repository;
 using Aplicacion.Interfaces.UseCase;
+using Aplicacion.Paginacion;
 using Dominio;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,24 @@ namespace Aplicacion.Cargo.CasosDeUso
             var cargos = await _repository.GetAllAsync();
 
             return cargos.Select(c => _mapper.Map(c));
+        }
+
+        public async Task<PaginationDto<CargoDto>> GetAllPaginated(int pageSize, int currentPage)
+        {
+            if (currentPage < 1) currentPage = 1;
+            if (pageSize < 1) pageSize = 10;
+
+            var result = await _repository.GetAllPaginatedAsync(pageSize, currentPage);
+
+            var cargosDto = result.Items.Select(c => _mapper.Map(c));
+
+            return new PaginationDto<CargoDto>
+            {
+                Items = cargosDto.ToList(),
+                PageSize = pageSize,
+                CurrentPage = currentPage,
+                TotalItems = result.TotalRecords
+            };
         }
 
         public async Task<CargoDto> GetById(int id)

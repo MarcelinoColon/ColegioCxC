@@ -16,6 +16,10 @@ namespace Repository
             _context = context;
         }
 
+        public Task<(IEnumerable<ConceptoEntity> Items, int TotalRecords)> GetAllPaginatedAsync(int pageSize, int currentPage)
+        {
+            throw new NotImplementedException();
+        }
         public async Task Create(ConceptoEntity entity)
         {
             if(entity == null)
@@ -40,6 +44,7 @@ namespace Repository
 
             return conceptosEntities;
         }
+
 
         public async Task<ConceptoEntity> GetByIdAsync(int id)
         {

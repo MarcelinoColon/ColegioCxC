@@ -1,0 +1,138 @@
+﻿@using Aplicacion.Cargo.DTOs
+@model CargoIndexVm
+
+<div>
+    <div>
+        <h2>Cargos</h2>
+        <hr />
+        <a class="btn btn-primary mb-2" asp-controller="Cargo" asp-action="Create">Generar Cargos</a>
+    </div>
+
+    <div class="row">
+        <form asp-action="Index" asp-controller="Cargo" method="get" class="row row-cols-lg-auto g-3 align-items-center">
+
+            <div class="col-12">
+                <label class="visually-hidden" for="inlineFormSelect">Cantidad por pagina</label>
+
+                <select asp-for="Pagination.PageSize" name="size" class="form-control"
+                        asp-items="@(new SelectList(@Model.SelectOptions))">
+                </select>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estudiante</th>
+                <th>Concepto</th>
+                <th>Cargo</th>
+                <th>Pendiente</th>
+                <th>Generacion</th>
+                <th>Vencimiento</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Pagination.Items.Any())
+            {
+                <tr>
+                    <td colspan="9" class="text-center align-middle">No hay cargos registrados!</td>
+                </tr>
+            }
+            @foreach (var cargo in Model.Pagination.Items)
+            {
+                <tr>
+                    <td>@cargo.Id</td>
+                    <td>@cargo.Estudiante?.Nombre @cargo.Estudiante?.Apellido</td>
+                    <td>@cargo.Concepto?.Nombre</td>
+                    <td>@cargo.TotalCargo.ToString("C")</td>
+                    <td>@cargo.SaldoPendiente.ToString("C")</td>
+                    <td>@cargo.FechaGeneracion.ToString("dd/M/yyyy")</td>
+                    <td>@cargo.FechaVencimiento.ToString("dd/M/yyyy")</td>
+                    <td>@cargo.Estado</td>
+                    <td>
+                        <a class="btn btn-secondary btn-sm">Registrar Pago</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        @{
+
+            int totalPages = (int)Math.Ceiling(Model.Pagination.TotalItems / (double)Model.Pagination.PageSize);
+
+            if (totalPages == 0) totalPages = 1;
+
+            bool hasPrevious = Model.Pagination.CurrentPage > 1;
+            bool hasNext = Model.Pagination.CurrentPage < totalPages;
+        }
+
+        <ul class="pagination">
+
+            <li class="page-item @(hasPrevious ? "" : "disabled")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-controller="Cargo"
+                   asp-route-page="@(Model.Pagination.CurrentPage - 1)"
+                   asp-route-size="@Model.Pagination.PageSize"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            @if (hasPrevious)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-controller="Cargo"
+                       asp-route-page="@(Model.Pagination.CurrentPage - 1)"
+                       asp-route-size="@Model.Pagination.PageSize">
+                        @(Model.Pagination.CurrentPage - 1)
+                    </a>
+                </li>
+            }
+
+            <li class="page-item active">
+                <span class="page-link">
+                    @Model.Pagination.CurrentPage
+                </span>
+            </li>
+
+            @if (hasNext)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-controller="Cargo"
+                       asp-route-page="@(Model.Pagination.CurrentPage + 1)"
+                       asp-route-size="@Model.Pagination.PageSize">
+                        @(Model.Pagination.CurrentPage + 1)
+                    </a>
+                </li>
+            }
+
+            <li class="page-item @(hasNext ? "" : "disabled")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-controller="Cargo"
+                   asp-route-page="@(hasNext? Model.Pagination.CurrentPage + 1 : totalPages)"
+                   asp-route-size="@Model.Pagination.PageSize"
+                   aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+

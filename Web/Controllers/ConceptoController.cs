@@ -1,4 +1,5 @@
 ﻿using Aplicacion.Concepto.DTOs;
+using Aplicacion.Estudiante.CasosDeUso;
 using Aplicacion.Interfaces.UseCase;
 using Dominio;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,24 @@ namespace Web.Controllers
 
                 return View("Add", conceptoDto);
             }
+        }
+        [HttpGet("obtener")]
+        public async Task<IActionResult> Obtener()
+        {
+            var conceptos = await _obtenerConceptoUseCase.GetAll();
+
+            var resultado = conceptos.Select(t =>
+            {
+                string nombreMonto = $"{t.Nombre} {t.Monto.ToString("C")}";
+
+                return new
+                {
+                    id = t.Id,
+                    text = $"{nombreMonto}"
+                };
+            });
+
+            return Json(new { results = resultado });
         }
     }
 }

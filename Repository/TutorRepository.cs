@@ -17,6 +17,10 @@ namespace Repository
         {
             _context = context;
         }
+        public Task<(IEnumerable<TutorEntity> Items, int TotalRecords)> GetAllPaginatedAsync(int pageSize, int currentPage)
+        {
+            throw new NotImplementedException();
+        }
         public async Task Create(TutorEntity entity)
         {
             if(entity == null)
@@ -127,6 +131,7 @@ namespace Repository
             }
             return tutorEntity;
         }
+
 
         #endregion
     }

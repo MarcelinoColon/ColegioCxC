@@ -8,7 +8,6 @@ namespace Aplicacion.Cargo.DTOs
     {
         public List<int> EstudiantesIds { get; set; }
         public int ConceptoId { get; set; }
-        public decimal TotalCargo { get; set; }
         public int? CargoId { get; set; }
     }
 }

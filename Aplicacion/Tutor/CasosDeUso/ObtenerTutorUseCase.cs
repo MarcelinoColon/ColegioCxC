@@ -1,6 +1,7 @@
 ﻿using Aplicacion.Interfaces.Mapper;
 using Aplicacion.Interfaces.Repository;
 using Aplicacion.Interfaces.UseCase;
+using Aplicacion.Paginacion;
 using Aplicacion.Tutor.DTOs;
 using Dominio;
 using System;
@@ -23,6 +24,11 @@ namespace Aplicacion.Tutor.CasosDeUso
             var tutoresEntity = await _repository.GetAllAsync();
 
             return tutoresEntity.Select(t => _mapper.Map(t));
+        }
+
+        public Task<PaginationDto<TutorDto>> GetAllPaginated(int pageSize, int currentPage)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<TutorDto> GetById(int id)

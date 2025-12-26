@@ -15,10 +15,12 @@ namespace Aplicacion.Cargo.CasosDeUso
         private readonly IRangeValidateRepository<EstudianteEntity> _validarEstudianteRepository;
 
         public AgregarCargosMasivosUseCase(ICreateRangeRepository<CargoEntity> repository, 
-            IReadRepository<ConceptoEntity> conceptoRepository)
+            IReadRepository<ConceptoEntity> conceptoRepository, 
+            IRangeValidateRepository<EstudianteEntity> validarEstudianteRepository)
         {
             _repository = repository;
             _conceptoRepository = conceptoRepository;
+            _validarEstudianteRepository = validarEstudianteRepository;
         }
 
         public async Task AddAsync(CargoInsertDto dto)
@@ -28,7 +30,9 @@ namespace Aplicacion.Cargo.CasosDeUso
             if(!dto.EstudiantesIds.Any())
                 throw new ArgumentException("Debe selecionar almenos 1 estudiante", nameof(dto.EstudiantesIds));
 
-            if (!(await _validarEstudianteRepository.Validate(dto.EstudiantesIds)))
+            var estudiantesExisten = await _validarEstudianteRepository.Validate(dto.EstudiantesIds);
+
+            if (!estudiantesExisten)
                 throw new ArgumentException("Uno o mas estudiantes no existen", nameof(dto.EstudiantesIds));
 
 
