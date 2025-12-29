@@ -11,5 +11,7 @@ namespace Data
         public int CargoId { get; set; }
         public decimal MontoAplicado { get; set; }
         public DateTime FechaRegistro { get; set; }
+        public Cargo? Cargo { get;set;  }
+        public Pago? Pago { get; set;  }
     }
 }

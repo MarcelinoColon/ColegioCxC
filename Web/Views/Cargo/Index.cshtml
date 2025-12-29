@@ -5,7 +5,7 @@
     <div>
         <h2>Cargos</h2>
         <hr />
-        <a class="btn btn-primary mb-2" asp-controller="Cargo" asp-action="Create">Generar Cargos</a>
+        <a class="btn btn-primary mb-2" asp-controller="Cargo" asp-route-size="@Model.Pagination.PageSize" asp-action="Create">Generar Cargos</a>
     </div>
 
     <div class="row">

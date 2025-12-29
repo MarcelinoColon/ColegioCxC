@@ -12,5 +12,6 @@ namespace Data
         public decimal MontoRecibido { get; set; }
         public decimal MontoUsado { get; set; }
         public decimal SaldoDisponible { get; set; }
+        public Estudiante? Estudiante { get; set; }
     }
 }
