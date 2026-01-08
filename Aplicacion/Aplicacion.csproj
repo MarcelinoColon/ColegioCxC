@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pago\" />
+    <Folder Include="Pago\Mappers\" />
+    <Folder Include="Pago\DTOs\" />
   </ItemGroup>
 
 </Project>
