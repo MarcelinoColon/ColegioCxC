@@ -27,9 +27,23 @@ namespace Aplicacion.Pago.CasosDeUso
             _UnitOfWork = unitOfWork;
         }
 
-        public Task AddAsync(PagoDto dto)
+        public async Task AddAsync(PagoDto dto, int cargoId)
         {
-            throw new NotImplementedException();
+            if(dto == null)
+                throw new ArgumentNullException(nameof(dto));
+
+            var cargoEntity = await _readCargoRepository.GetByIdAsync(cargoId);
+
+            if(cargoEntity == null)
+                throw new ArgumentNullException(nameof(cargoId));
+
+            var montoAAplicar = Math.Min(dto.MontoRecibido, cargoEntity.SaldoPendiente);
+
+            var saldoParaBilletera = dto.MontoRecibido - montoAAplicar;
+
+            var pagoEntity = new PagoEntity(dto.EstudianteId, DateTime.UtcNow, dto.MontoRecibido, montoAAplicar);
         }
+
+
     }
 }
