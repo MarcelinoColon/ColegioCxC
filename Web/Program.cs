@@ -10,6 +10,8 @@ using Aplicacion.Estudiante.Mappers;
 using Aplicacion.Interfaces.Mapper;
 using Aplicacion.Interfaces.Repository;
 using Aplicacion.Interfaces.UseCase;
+using Aplicacion.Pago.CasosDeUso;
+using Aplicacion.Pago.DTOs;
 using Aplicacion.Tutor.CasosDeUso;
 using Aplicacion.Tutor.DTOs;
 using Aplicacion.Tutor.Mappers;
@@ -59,6 +61,8 @@ builder.Services.AddScoped<IReadUseCase<ConceptoDto, ConceptoEntity>, ObtenerCon
 builder.Services.AddScoped<ICreateUseCase<CargoInsertDto, CargoEntity>, AgregarCargosMasivosUseCase>();
 builder.Services.AddScoped<IReadUseCase<CargoDto, CargoEntity>, ObtenerCargoUseCase>();
 
+builder.Services.AddScoped<ICreatePagoUseCase<PagoDto, PagoEntity>, RegistrarPagoNuevoUseCase>();
+
 //Repository
 builder.Services.AddScoped<ICreateRepository<TutorEntity>, TutorRepository>();
 builder.Services.AddScoped<IReadRepository<TutorEntity>, TutorRepository>();
@@ -75,6 +79,15 @@ builder.Services.AddScoped<IReadRepository<ConceptoEntity>, ConceptoRepository>(
 
 builder.Services.AddScoped<ICreateRangeRepository<CargoEntity>, CargoRepository>();
 builder.Services.AddScoped<IReadRepository<CargoEntity>, CargoRepository>();
+builder.Services.AddScoped<IUpdateRepository<CargoEntity>, CargoRepository>();
+
+builder.Services.AddScoped<ICreateRepository<PagoEntity>, PagoRepository>();
+
+builder.Services.AddScoped<ICreateRepository<TransaccionPagoEntity>, TransaccionPagoRepository>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
 
 
 

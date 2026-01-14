@@ -2,13 +2,10 @@
 using Data;
 using Dominio;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Repository
 {
-    public class CargoRepository : ICreateRangeRepository<CargoEntity>, IReadRepository<CargoEntity>
+    public class CargoRepository : ICreateRangeRepository<CargoEntity>, IReadRepository<CargoEntity>, IUpdateRepository<CargoEntity>
     {
         private readonly ColegioDbContext _context;
         public CargoRepository(ColegioDbContext context)
@@ -41,7 +38,10 @@ namespace Repository
 
         public async Task<CargoEntity> GetByIdAsync(int id)
         {
-            var cargo = await _context.Cargos.FindAsync(id);
+            var cargo = await _context.Cargos
+                .Include(c => c.Estudiante)
+                .Include(c => c.Concepto)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (cargo == null)
                 throw new ArgumentNullException(nameof(cargo));
@@ -57,6 +57,23 @@ namespace Repository
                 .ToListAsync();
 
             return cargos.Select(c => MapToEntity(c));
+        }
+        public async Task Update(CargoEntity entity)
+        {
+            // 1. Buscamos el MODELO de base de datos original (trackeado)
+            var model = await _context.Cargos.FindAsync(entity.Id);
+
+            if (model == null)
+                throw new KeyNotFoundException($"No se encontró el cargo con Id {entity.Id} para actualizar.");
+
+            // 2. Pasamos los valores ACTUALIZADOS de tu Entidad de Dominio al Modelo de BD
+            // Solo actualizamos los campos que pueden cambiar en tu lógica de negocio
+            model.TotalPagado = entity.TotalPagado;
+            model.SaldoPendiente = entity.SaldoPendiente;
+            model.Estado = entity.Estado;
+
+            // No hace falta llamar a Update(), EF detecta los cambios en 'model'
+            // El UnitOfWork.SaveChangesAsync() se encargará de persistirlo.
         }
 
 

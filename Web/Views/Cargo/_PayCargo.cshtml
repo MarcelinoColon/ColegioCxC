@@ -1,0 +1,33 @@
+﻿@model PagoCargoVm
+
+<form id="formPayCargo" method="post" asp-controller="Pago" asp-action="PagarCargo" asp-route-cargoId="@Model.CargoId">
+
+    <input type="hidden" asp-for="CargoId" />
+    <input type="hidden" asp-for="EstudianteId" />
+
+    <div class="mb-3">
+        <label class="form-label">Estudiante</label>
+        <input class="form-control" value="@Model.EstudianteNombre" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Concepto</label>
+        <input class="form-control" value="@Model.Concepto" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Saldo pendiente</label>
+        <input class="form-control" value="@Model.SaldoDisponible.ToString("C")" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Monto recibido</label>
+        <input asp-for="MontoRecibido" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit">Guardar</button>
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+    </div>
+
+</form>

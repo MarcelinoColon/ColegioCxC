@@ -82,5 +82,25 @@ namespace Web.Controllers
                 return View("Add", dto);
             }
         }
+        [HttpGet("pagar-cargo")]
+        public IActionResult PayCargo(
+    int cargoId,
+    string concepto,
+    int estudianteId,
+    string estudianteNombre,
+    decimal saldoDisponible)
+        {
+            var vm = new PagoCargoVm
+            {
+                CargoId = cargoId,
+                Concepto = concepto,
+                EstudianteId = estudianteId,
+                EstudianteNombre = estudianteNombre,
+                SaldoDisponible = saldoDisponible
+            };
+
+            return PartialView("_PayCargo", vm);
+        }
+
     }
 }
