@@ -12,6 +12,7 @@ using Aplicacion.Interfaces.Repository;
 using Aplicacion.Interfaces.UseCase;
 using Aplicacion.Pago.CasosDeUso;
 using Aplicacion.Pago.DTOs;
+using Aplicacion.Reportes.CasosDeUso;
 using Aplicacion.Tutor.CasosDeUso;
 using Aplicacion.Tutor.DTOs;
 using Aplicacion.Tutor.Mappers;
@@ -62,6 +63,7 @@ builder.Services.AddScoped<ICreateUseCase<CargoInsertDto, CargoEntity>, AgregarC
 builder.Services.AddScoped<IReadUseCase<CargoDto, CargoEntity>, ObtenerCargoUseCase>();
 
 builder.Services.AddScoped<ICreatePagoUseCase<PagoDto, PagoEntity>, RegistrarPagoNuevoUseCase>();
+builder.Services.AddScoped<ICreateReport,Generador>();
 
 //Repository
 builder.Services.AddScoped<ICreateRepository<TutorEntity>, TutorRepository>();

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Configuraciones de página para el PDF */
+        @page {
+            size: letter;
+            margin: 2cm;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0.3rem;
+        }
+
+        /* Encabezado: Logo y Nombre */
+        .header {
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo-frame {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed #bdc3c7; /* Marco para el logo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .logo-placeholder {
+            font-size: 10px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        .institution-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        /* Información del reporte: Concepto y Fecha */
+        .report-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            background-color: #f4f7f6;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .concept-box b {
+            display: block;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .concept-text {
+            font-size: 18px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .date-text {
+            text-align: right;
+            color: #34495e;
+        }
+
+        /* Tabla de artículos */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            text-align: left;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 13px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Estilo de moneda y alineación */
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .price-col { font-family: 'Courier New', Courier, monospace; font-weight: bold; }
+
+        /* Pie de página o totales */
+        .footer {
+            margin-top: 50px;
+            text-align: right;
+            font-size: 16px;
+        }
+
+        .total-box {
+            border-top: 2px solid #2c3e50;
+            display: inline-block;
+            padding-top: 10px;
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-frame">
+            <div class="logo-placeholder">LOGO<br>AQUÍ</div>
+        </div>
+        <h1 class="institution-name">Nombre de la Institución</h1>
+    </header>
+
+    <section class="report-info">
+        <div class="concept-box">
+            <b>Concepto del Reporte</b>
+            <span class="concept-text">Reporte de Ventas</span>
+        </div>
+        <div class="date-text">
+            <b>Fecha:</b><br>
+            2026-02-17.xlsx
+        </div>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="10%">ID</th>
+                <th width="50%">Descripción del Producto</th>
+                <th width="15%" class="text-center">Cant.</th>
+                <th width="25%" class="text-right">Precio Unitario</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>1</td>
+                <td>Producto A</td>
+                <td class="text-center">10</td>
+                <td class="text-right price-col">$9.99</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td>Producto B</td>
+                <td class="text-center">5</td>
+                <td class="text-right price-col">$19.99</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div class="total-box">
+            <strong>Resumen Total:</strong> 
+            <span>$ 123.45</span>
+        </div>
+    </div>
+
+</body>
+</html>

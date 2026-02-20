@@ -1,0 +1,17 @@
+{
+    "titulo": "Vendidos",
+    "items": [
+        {
+            "id": 1,
+            "producto": "Laptop",
+            "cantidad": 2,
+            "precio": 1500.00
+        },
+        {
+            "id": 2,
+            "producto": "Laptop2",
+            "cantidad": 3,
+            "precio": 1500.00
+        }
+    ]
+}

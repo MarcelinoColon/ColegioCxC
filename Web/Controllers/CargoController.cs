@@ -2,6 +2,7 @@
 using Aplicacion.Concepto.DTOs;
 using Aplicacion.Interfaces.UseCase;
 using Aplicacion.Paginacion;
+using Aplicacion.Reportes.CasosDeUso;
 using Dominio;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
@@ -15,12 +16,15 @@ namespace Web.Controllers
     {
         private readonly IReadUseCase<CargoDto, CargoEntity> _obtenerCargoUseCase;
         private readonly ICreateUseCase<CargoInsertDto, CargoEntity> _crearCargoUseCase;
+        private readonly ICreateReport _generarReporteUseCase;
 
         public CargoController(IReadUseCase<CargoDto, CargoEntity> obtenerCargoUseCase, 
-            ICreateUseCase<CargoInsertDto, CargoEntity> crearCargoUseCase)
+            ICreateUseCase<CargoInsertDto, CargoEntity> crearCargoUseCase,
+            ICreateReport generarReporteUseCase)
         {
             _obtenerCargoUseCase = obtenerCargoUseCase;
             _crearCargoUseCase = crearCargoUseCase;
+            _generarReporteUseCase = generarReporteUseCase;
         }
         [HttpGet("")]
         [HttpGet("{page:int}/{size:int}")]
@@ -28,6 +32,8 @@ namespace Web.Controllers
         {
             try
             {
+                  _generarReporteUseCase.GeneratePdfReportAsync();
+
                 var cargosDtos = await _obtenerCargoUseCase.GetAllPaginated(size, page);
 
                 return View(new CargoIndexVm()
